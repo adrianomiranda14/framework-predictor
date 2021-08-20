@@ -4,6 +4,7 @@
 drive.mount('/content/drive')"""
 
 import pandas as pd
+from helpers import *
 from collections import Counter
 import numpy as np
 from sklearn.naive_bayes import BernoulliNB
@@ -23,29 +24,13 @@ from nltk.collocations import *
 pd.set_option("max_colwidth", 1000)
 pd.set_option("display.max_rows", 200)
 
-def lower_case(dataframe):
-  """ Transforms values in columns to lower case """
-  for col in dataframe.columns:
-    if dataframe[col].dtypes == 'object':
-      dataframe[col] = dataframe[col].str.lower()
-  return dataframe
 
-csv_paths = ["/content/drive/MyDrive/CSVs for ML/April 2021 - Adriano's copy - April 2021 Data for ML.csv",
+
+csv_paths = ["csv for Predictor/April 2021 - Adriano_s copy - April 2021 Data for ML.csv",
              "/content/drive/MyDrive/CSVs for ML/Copy of April 2020 data - April 2020 Data for ML.csv",
              "/content/drive/MyDrive/CSVs for ML/Grid Vacancy Details - sheet1.csv",
              "/content/drive/MyDrive/CSVs for ML/Working Copy of October 2020 (updated 30_11_20) - Oct 2020 Data for ML.csv",
              "/content/drive/MyDrive/CSVs for ML/cshr-mappings.gs - Extracted DDaT Roles.csv"]
-csv_paths
-
-def clean_columns(path):
-  df = pd.read_csv(path,  low_memory=False)
-  df.columns = [x.lower() for x in df.columns]
-  df.columns = [x.replace(" ","_") for x in df.columns]
-  df.columns = [x.replace(",","") for x in df.columns]
-  df.columns = [x.replace(")","") for x in df.columns]
-  df.columns = [x.replace("(","") for x in df.columns]
-  #df['job_role'] = df['job_role'].str.lower()
-  return df
 
 apr_21_df = clean_columns(csv_paths[0])
 apr_20_df = clean_columns(csv_paths[1])
