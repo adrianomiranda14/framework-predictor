@@ -1,4 +1,4 @@
-
+import pandas as pd
 
 
 
@@ -21,3 +21,15 @@ def clean_columns(path):
   df.columns = [x.replace("(","") for x in df.columns]
   #df['job_role'] = df['job_role'].str.lower()
   return df
+
+def job_title_fun(model, string):
+  x = vectorizer.transform([string])
+  y = model.predict(x)
+  return y
+
+def predict_job_title_prob(string):
+  x = vectorizer.transform([string])
+  y = nb.predict_proba(x)
+  z = nb.classes_[np.argsort(-y)]
+  a = z[0][0:3]
+  return a
