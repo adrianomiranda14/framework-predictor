@@ -19,9 +19,9 @@ from nltk.collocations import *
 pd.set_option("max_colwidth", 1000)
 pd.set_option("display.max_rows", 200)
 
-csv_paths= ['csv for Predictor/April 2021 - Adriano_s copy - April 2021 Data for ML.csv',
-            'csv for Predictor/Copy of April 2020 data - April 2020 Data for ML.csv',
-            'csv for Predictor/Working Copy of October 2020 (updated 30_11_20) - Oct 2020 Data for ML.csv']
+csv_paths = ['csv for Predictor/April 2021 - Adriano_s copy - April 2021 Data for ML.csv',
+             'csv for Predictor/Copy of April 2020 data - April 2020 Data for ML.csv',
+             'csv for Predictor/Working Copy of October 2020 (updated 30_11_20) - Oct 2020 Data for ML.csv']
 
 
 apr_21_df = clean_columns(csv_paths[0])

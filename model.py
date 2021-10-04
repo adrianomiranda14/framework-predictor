@@ -22,5 +22,4 @@ lr.fit(X_train, Y_train)
 clf.fit(X_train, Y_train)
 
 
-class Model:
-    def __init__(self):
+

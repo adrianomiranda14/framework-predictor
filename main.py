@@ -24,42 +24,48 @@ from nltk.collocations import *
 pd.set_option("max_colwidth", 1000)
 pd.set_option("display.max_rows", 200)
 
+# Import a dataframe with cols for Dept Job title ['dept_job_title' and the framework role mapping
 train_df = pd.read_csv('csv for Predictor/Training DF.csv')
 
+# Split the dept job title into the individual words so that vectors can be applied
 df2 = train_df['dept_job_title'].map(lambda x: x.split())
 
+# This was the initial attempt to make bigrams before finding a function to do so within the CountVectorizer function
 bigram_measures = nltk.collocations.BigramAssocMeasures()
 finder = BigramCollocationFinder.from_documents(df2)
 
 finder.apply_freq_filter(5)
 bigrams = finder.nbest(bigram_measures.pmi, 50)
 
-tough_vec = CountVectorizer(ngram_range=(1,2), stop_words = 'english', binary = True, min_df = 0.001)
+# These are functions to create a variety of vectorizers to test changes in arguments for the most accurate method
+
+tough_vec = CountVectorizer(ngram_range=(1, 2), stop_words='english', binary=True, min_df=0.0006)
 X3 = tough_vec.fit_transform(train_df['combo'])
 print(tough_vec.get_feature_names())
+len(tough_vec.get_feature_names())
 
-vectorizer2 = CountVectorizer(ngram_range=(1,2), stop_words = 'english', binary = True, min_df = 0.0001)
+vectorizer2 = CountVectorizer(ngram_range=(1, 2), stop_words='english', binary=True, min_df=0.0001)
 X2 = vectorizer2.fit_transform(train_df['combo'])
 print(vectorizer2.get_feature_names())
-
+len(vectorizer2.get_feature_names())
 
 vectorizer = CountVectorizer(stop_words='english', binary=True, min_df=0.0001)
 X = vectorizer.fit_transform(train_df['combo'])
 print(vectorizer.get_feature_names())
-
+len(vectorizer.get_feature_names())
 vecs = [X, X2, X3]
 
 for i in vecs:
-  X_train, X_test, Y_train, Y_test = train_test_split(i, train_df['job_role'], test_size=0.33, random_state=42)
-  nb = BernoulliNB()
-  lr = LogisticRegression(random_state=0, max_iter=1000)
-  clf = RandomForestClassifier(max_depth=20, random_state=0)
-  nb.fit(X_train, Y_train)
-  lr.fit(X_train, Y_train)
-  clf.fit(X_train, Y_train)
-  print(clf.score(X_test, Y_test))
-  print(nb.score(X_test, Y_test))
-  print(lr.score(X_test, Y_test))
+    X_train, X_test, Y_train, Y_test = train_test_split(i, train_df['job_role'], test_size=0.33, random_state=42)
+    nb = BernoulliNB()
+    lr = LogisticRegression(random_state=0, max_iter=1000)
+    clf = RandomForestClassifier(max_depth=20, random_state=0)
+    nb.fit(X_train, Y_train)
+    lr.fit(X_train, Y_train)
+    clf.fit(X_train, Y_train)
+    print(clf.score(X_test, Y_test))
+    print(nb.score(X_test, Y_test))
+    print(lr.score(X_test, Y_test))
 
 
 #This only builds the testing and training arrays
