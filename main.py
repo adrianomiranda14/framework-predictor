@@ -27,7 +27,7 @@ pd.set_option("display.max_rows", 200)
 # Import a dataframe with cols for Dept Job title ['dept_job_title' and the framework role mapping
 train_df = pd.read_csv('csv for Predictor/Training DF.csv')
 
-# Split the dept job title into the individual words so that vectors can be applied
+# Split the dept job title into the individual words so that vectors can be applied Not currently used
 df2 = train_df['dept_job_title'].map(lambda x: x.split())
 
 # This was the initial attempt to make bigrams before finding a function to do so within the CountVectorizer function
@@ -56,9 +56,13 @@ len(vectorizer.get_feature_names())
 vecs = [X, X2, X3]
 
 for i in vecs:
+    # This line splits the df into training and test data
     X_train, X_test, Y_train, Y_test = train_test_split(i, train_df['job_role'], test_size=0.33, random_state=42)
+    # Naive Bayes Classifier
     nb = BernoulliNB()
+    # Logistic Regression Classifier
     lr = LogisticRegression(random_state=0, max_iter=1000)
+    # Random Forest Classifier
     clf = RandomForestClassifier(max_depth=20, random_state=0)
     nb.fit(X_train, Y_train)
     lr.fit(X_train, Y_train)

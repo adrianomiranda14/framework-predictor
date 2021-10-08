@@ -22,7 +22,7 @@ def clean_columns(path):
   #df['job_role'] = df['job_role'].str.lower()
   return df
 
-def job_title_fun(model, string):
+def job_title_fun(vectorizer, model, string):
   x = vectorizer.transform([string])
   y = model.predict(x)
   return y
